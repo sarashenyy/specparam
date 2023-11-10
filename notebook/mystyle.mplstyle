@@ -1,0 +1,34 @@
+# Axes and ticks
+axes.facecolor : white
+axes.grid: False
+axes.edgecolor: 0.
+axes.labelcolor: 0.
+axes.labelsize: 16
+
+xtick.direction: in
+ytick.direction: in
+xtick.top: True
+xtick.bottom: True
+ytick.left: True
+ytick.right: True
+xtick.minor.visible: True
+ytick.minor.visible: True
+xtick.labelsize: 12
+ytick.labelsize: 12
+
+# Space xlabels lower than default.
+xtick.major.pad: 6
+xtick.minor.pad: 6
+
+
+# legend
+legend.frameon: False
+legend.fontsize: 14
+
+# text
+font.size: 14
+
+
+# savefig options (avoid clipping at margins)
+savefig.bbox : tight
+savefig.pad_inches : 0.05
