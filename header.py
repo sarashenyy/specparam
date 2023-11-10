@@ -14,12 +14,12 @@ from scipy.signal import savgol_filter
 # 去除没有 gaia_source_id 的数据
 def getData_ingaia(file):
     cond_nan_gaiaid = np.isnan(file['gaia_source_id']) | (file['gaia_source_id'] < -9000)
-    ingaia_index = set(file.index) - set(np.where(cond_nan_gaiaid)[0])
+    ingaia_index = list(set(file.index) - set(np.where(cond_nan_gaiaid)[0]))
     print('total:', len(file.index))
     print('WITHOUT gaia source:', len(np.where(cond_nan_gaiaid)[0]))
     print('WITH gaia source:', len(ingaia_index))
 
-    return_file = file.loc[ingaia_index, :].reset_index(drop=True)
+    return_file = file.loc[list(ingaia_index), :].reset_index(drop=True)
     return return_file
 
 
@@ -43,7 +43,7 @@ def solar_like_APOGEE(file, teff_min=4800, teff_max=6800, feh_min=-1.0, feh_max=
 def BpRp_cut(data):
     cond_bprp = ((data['bp_rp'] - data['ebpminrp_gspphot']) > 0) & ((data['bp_rp'] - data['ebpminrp_gspphot']) < 1.5)
     index = np.where(cond_bprp)[0]
-    return_data = data.loc[index, :].reset_index(drop=True)
+    return_data = data.loc[list(index), :].reset_index(drop=True)
     print('bprp and ebpminrp_gspphot not nan and bprp0 in [0,1.5]: ', len(np.where(cond_bprp)[0]))
     return return_data
 
@@ -92,7 +92,7 @@ def resonable_dis_plx(file, l_p_limit=5, correction=False):
     # plt.savefig('./venn.jpg')
 
     index = set(file.index) - set(no_dgsp | no_jones | no_p | low_p)
-    return_file = file.loc[index, :].reset_index(drop=True)
+    return_file = file.loc[list(index), :].reset_index(drop=True)
 
     print('total dataset:', len(file.index))
     print('with resonable distance and parallax:', len(index))
@@ -103,7 +103,7 @@ def resonable_dis_plx(file, l_p_limit=5, correction=False):
 def Mg_cut(data, mg_low=1, mg_up=7):
     cond_mg = ((data['qg_geo'] - data['ag_gspphot']) > 1) & ((data['qg_geo'] - data['ag_gspphot']) < 7)
     index = np.where(cond_mg)[0]
-    return_data = data.loc[index, :].reset_index(drop=True)
+    return_data = data.loc[list(index), :].reset_index(drop=True)
     print('(Mg)0 in [%d,%d]: ' % (mg_low, mg_up), len(np.where(cond_mg)[0]))
     return return_data
 
@@ -130,10 +130,10 @@ def select_SNR(file, snrg_limit=10, snrr=False, snrr_limit=None):
     print('low snr quality in:', len(low_snr_index))
     print('high snr quality in :', (len(high_snr_index)))
 
-    high_snr = file.loc[high_snr_index, ['snrg', 'snrr']]
-    low_snr = file.loc[low_snr_index, ['snrg', 'snrr']]
+    high_snr = file.loc[list(high_snr_index), ['snrg', 'snrr']]
+    low_snr = file.loc[list(low_snr_index), ['snrg', 'snrr']]
 
-    return_file = file.loc[high_snr_index, :].reset_index(drop=True)
+    return_file = file.loc[list(high_snr_index), :].reset_index(drop=True)
 
     fig, ax = plt.subplots(figsize=(6, 6), dpi=200)
     ax.scatter(high_snr['snrg'], high_snr['snrr'], s=0.2, marker='.', color='black')
@@ -152,7 +152,7 @@ def select_SNR(file, snrg_limit=10, snrr=False, snrr_limit=None):
 def select_fibermask(data):
     cond_fibermask = (data['fibermask'] == 0)
     index = np.where(cond_fibermask)[0]
-    return_data = data.loc[index, :].reset_index(drop=True)
+    return_data = data.loc[list(index), :].reset_index(drop=True)
     print('origin number:', len(data.index))
     print('fibermask == 0:', len(np.where(cond_fibermask)[0]))
     return return_data
@@ -173,7 +173,7 @@ def random_sample(data_dup, number=60000):
     data = data_dup.drop_duplicates(subset=['uid'], keep='first').reset_index(drop=True)
     random.seed(42)  # 初始化随机数种子用以后续操作的重复实现
     rand_index = random.sample(set(np.array(data.index)), number)  # 随机取
-    rand_sample = data.loc[rand_index, :].reset_index(drop=True)
+    rand_sample = data.loc[list(rand_index), :].reset_index(drop=True)
     return rand_sample
 
 
