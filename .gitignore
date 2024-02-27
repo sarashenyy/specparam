@@ -1,6 +1,7 @@
 #my data
 data/
 figure/
+code/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
