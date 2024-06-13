@@ -3,7 +3,8 @@ axes.facecolor : white
 axes.grid: False
 axes.edgecolor: 0.
 axes.labelcolor: 0.
-axes.labelsize: 16
+axes.labelsize: 18
+axes.linewidth: 1.6
 
 xtick.direction: in
 ytick.direction: in
@@ -13,8 +14,12 @@ ytick.left: True
 ytick.right: True
 xtick.minor.visible: True
 ytick.minor.visible: True
-xtick.labelsize: 12
-ytick.labelsize: 12
+xtick.labelsize: 14
+ytick.labelsize: 14
+xtick.major.width: 1.6
+ytick.major.width: 1.6
+xtick.minor.width: 1.3
+ytick.minor.width: 1.3
 
 # Space xlabels lower than default.
 xtick.major.pad: 6
@@ -22,12 +27,16 @@ xtick.minor.pad: 6
 
 
 # legend
-legend.frameon: False
-legend.fontsize: 14
+legend.frameon: True
+legend.fontsize: 16
 
 # text
-font.size: 14
+font.size: 16
 
+# Use LaTeX fonts
+font.family: serif
+font.serif: ComputerModern
+text.usetex: true
 
 # savefig options (avoid clipping at margins)
 savefig.bbox : tight
